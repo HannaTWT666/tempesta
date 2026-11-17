@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conteção</title>
+    <style>
+        body {
+            margin: 0;
+            min-height: 100vh;
+            background-color: #020a02;
+            color: #1aff1a;
+            font-family: "Courier New", monospace;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .cabeca {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .pergunta {
+            font-size: 50px;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            margin-bottom: 50px;
+            text-shadow: 0 0 10px #00ff00;
+            animation: piscar 3s infinite;
+        }
+
+        button {
+            font-family: "Courier New", monospace;
+            font-size: 22px;
+            text-transform: uppercase;
+            padding: 12px 40px;
+            margin: 0 15px;
+            background-color: transparent;
+            color: #1aff1a;
+            border: 2px solid #0a6b0a;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .respS:hover {
+            background-color: #1aff1a;
+            color: #000;
+            box-shadow: 0 0 20px #00ff00;
+        }
+
+        .respN:hover {
+            background-color: #000;
+            border-color: #1aff1a;
+            box-shadow: 0 0 30px #006600;
+        }
+
+       
+        .segredo {
+            display: none;
+            margin-top: 50px;
+        }
+
+        .frase {
+            font-size: 22px;
+            margin-bottom: 20px;
+        }
+
+        .morse {
+            font-size: 26px;
+            letter-spacing: 4px;
+            margin-bottom: 40px;
+            text-shadow: 0 0 10px #00ff00;
+        }
+
+        .senha {
+            font-family: "Courier New", monospace;
+            font-size: 20px;
+            padding: 10px;
+            width: 280px;
+            background-color: #000;
+            color: #1aff1a;
+            border: 2px solid #0a6b0a;
+            text-align: center;
+            text-transform: uppercase;
+        }
+
+        .senha:focus {
+            outline: none;
+            border-color: #1aff1a;
+            box-shadow: 0 0 15px #00ff00;
+        }
+
+        .btnSenha {
+            font-size: 18px;
+            padding: 10px 25px;
+            margin: 0 0 0 10px;
+        }
+
+        .btnSenha:hover {
+            background-color: #1aff1a;
+            color: #000;
+        }
+
+        .resultado {
+            margin-top: 30px;
+            font-size: 22px;
+        }
+
+        
+        .convocacao {
+            display: none;
+            max-width: 650px;
+            margin: 40px auto 0 auto;
+            padding: 30px;
+            border: 2px solid #0a6b0a;
+            background-color: rgba(0, 40, 0, 0.35);
+            box-shadow: 0 0 30px #004d00;
+            animation: aparecer 2s;
+        }
+
+        .convocacao h2 {
+            font-size: 28px;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            margin: 0 0 25px 0;
+            text-shadow: 0 0 12px #00ff00;
+        }
+
+        .convocacao p {
+            font-size: 19px;
+            line-height: 1.7;
+            margin: 0 0 18px 0;
+        }
+
+        .endereco {
+            font-size: 24px;
+            letter-spacing: 6px;
+            padding: 12px;
+            margin: 25px 0;
+            border-top: 1px solid #0a6b0a;
+            border-bottom: 1px solid #0a6b0a;
+        }
+
+        .endereco small {
+            display: block;
+            font-size: 12px;
+            letter-spacing: 2px;
+            opacity: 0.6;
+            margin-top: 6px;
+        }
+
+        .aviso {
+            font-style: italic;
+            opacity: 0.8;
+        }
+
+       
+        .localizacao {
+            display: none;
+            margin-top: 50px;
+        }
+
+        .textoLoc {
+            font-size: 24px;
+            text-shadow: 0 0 10px #00ff00;
+        }
+
+        .textoLoc.alerta {
+            color: #ff2a2a;
+            text-shadow: 0 0 12px #ff0000;
+        }
+
+        .imagem {
+            display: none;
+            margin: 30px auto 0 auto;
+            width: 400px;
+            max-width: 90%;
+            border: 2px solid #0a6b0a;
+            box-shadow: 0 0 25px #006600;
+        }
+
+        
+        .saibaMais {
+            display: none;
+            margin-top: 30px;
+            font-size: 22px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            text-decoration: none;
+            padding: 12px 40px;
+            color: #1aff1a;
+            border: 2px solid #1aff1a;
+            box-shadow: 0 0 20px #006600;
+            transition: 0.3s;
+        }
+
+        .saibaMais:hover {
+            background-color: #1aff1a;
+            color: #000;
+            box-shadow: 0 0 30px #00ff00;
+        }
+
+      
+        .assinatura {
+            position: fixed;
+            bottom: 10px;
+            right: 15px;
+            font-size: 12px;
+            text-align: right;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #0f9e0f;
+            opacity: 0.7;
+        }
+
+        
+        .cabeca {
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .pergunta,
+        .frase,
+        .morse {
+            overflow-wrap: break-word;
+        }
+
+        @media (max-width: 800px) {
+            .pergunta {
+                font-size: 36px;
+                letter-spacing: 3px;
+                margin-bottom: 35px;
+            }
+
+            .morse {
+                font-size: 22px;
+                letter-spacing: 3px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .cabeca {
+                padding: 20px 15px 90px 15px; 
+            }
+
+            .pergunta {
+                font-size: 28px;
+                letter-spacing: 2px;
+            }
+
+            button {
+                font-size: 18px;
+                padding: 10px 28px;
+                margin: 5px 8px;
+            }
+
+            .frase {
+                font-size: 18px;
+            }
+
+            .morse {
+                font-size: 18px;
+                letter-spacing: 2px;
+            }
+
+            .senha {
+                width: 100%;
+                max-width: 280px;
+                box-sizing: border-box;
+                font-size: 18px;
+            }
+
+            .btnSenha {
+                margin: 15px 0 0 0;
+            }
+
+            .textoLoc {
+                font-size: 19px;
+            }
+
+            .convocacao {
+                padding: 20px 15px;
+            }
+
+            .convocacao h2 {
+                font-size: 20px;
+                letter-spacing: 2px;
+            }
+
+            .convocacao p {
+                font-size: 16px;
+            }
+
+            .endereco {
+                font-size: 16px;
+                letter-spacing: 3px;
+            }
+
+            .assinatura {
+                font-size: 10px;
+                left: 10px;
+                right: 10px;
+                bottom: 8px;
+                text-align: center;
+            }
+        }
+
+        @keyframes aparecer {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+      
+        @keyframes piscar {
+            0% { opacity: 1; }
+            90% { opacity: 1; }
+            93% { opacity: 0.2; }
+            96% { opacity: 1; }
+            98% { opacity: 0.4; }
+            100% { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <header class="cabeca">
+        <h1 class="pergunta">você e um deles?</h1>
+        <button class="respS" onclick="mostrarLocalizacao()">sim</button>
+        <button class="respN" onclick="mostrarSegredo()">não</button>
+
+        <div class="segredo" id="segredo">
+            <p class="frase">"diga a senha para se esconder da tempestade com a gente no bunker"</p>
+            <p class="morse">--.. .-. .-. --. ..-. ..- -.. --.. --- .... ..- ...-</p>
+
+            <input type="text" class="senha" id="senha" placeholder="digite a senha">
+            <button class="btnSenha" onclick="verificarSenha()">enviar</button>
+
+            <p class="resultado" id="resultado"></p>
+
+            <div class="convocacao" id="convocacao">
+                <h2>você foi selecionado</h2>
+                <p>A tempestade já chegou. Ela não vem do céu: rasteja entre as árvores, devora tudo o que encontra e nunca dorme.</p>
+                <p>Poucos ouviram o chamado, e menos ainda sabem a senha. Você sabe. Por isso, é um dos escolhidos para salvar a humanidade.</p>
+                <p>Venha ao endereço abaixo antes do anoitecer. Nosso bunker vai te manter seguro contra a tempestade.</p>
+
+                <div class="endereco">
+                    ████████████████
+                    <small>[endereço censurado]</small>
+                </div>
+
+                <p class="aviso">Não conte a ninguém. Eles estão ouvindo.</p>
+            </div>
+
+            
+            <a class="saibaMais" id="saibaMais" href="https://www.exemplo.com">saiba mais</a>
+        </div>
+
+        <div class="localizacao" id="localizacao">
+            <p class="textoLoc" id="textoLoc"></p>
+
+           
+            <img class="imagem" id="imagem" src="skinwalker 2.jpg" alt="">
+        </div>
+    </header>
+
+    <div class="assinatura">
+        república federativa do brasil<br>
+        contenção de ameaças não convencionais
+    </div>
+
+    <script>
+        var intervalo;
+        var tempo;
+
+        function mostrarSegredo() {
+            
+            clearInterval(intervalo);
+            clearTimeout(tempo);
+            document.getElementById("localizacao").style.display = "none";
+
+            document.getElementById("segredo").style.display = "block";
+        }
+
+        function mostrarLocalizacao() {
+            var texto = document.getElementById("textoLoc");
+            var imagem = document.getElementById("imagem");
+            var pontos = 0;
+
+            
+            clearInterval(intervalo);
+            clearTimeout(tempo);
+            document.getElementById("segredo").style.display = "none";
+
+            document.getElementById("localizacao").style.display = "block";
+            texto.classList.remove("alerta");
+            imagem.style.display = "none";
+            texto.textContent = "pegando sua localização";
+
+            
+            intervalo = setInterval(function () {
+                pontos = pontos + 1;
+                if (pontos > 3) {
+                    pontos = 0;
+                }
+                texto.textContent = "pegando sua localização" + ".".repeat(pontos);
+            }, 500);
+
+           
+            tempo = setTimeout(function () {
+                clearInterval(intervalo);
+                texto.classList.add("alerta");
+                texto.textContent = "localização encontrada, mandando agentes para sua eliminação";
+                imagem.style.display = "block";
+            }, 5000);
+        }
+
+        function verificarSenha() {
+            var texto = document.getElementById("senha").value;
+            var resultado = document.getElementById("resultado");
+
+           
+            texto = texto.trim().toUpperCase();
+
+            if (texto === "WOODCRAWLERS") {
+                resultado.textContent = "";
+                document.getElementById("convocacao").style.display = "block";
+                document.getElementById("saibaMais").style.display = "inline-block";
+            } else {
+                resultado.textContent = "senha errada. a tempestade está chegando...";
+                document.getElementById("convocacao").style.display = "none";
+                document.getElementById("saibaMais").style.display = "none";
+            }
+        }
+    </script>
+</body>
+</html>
