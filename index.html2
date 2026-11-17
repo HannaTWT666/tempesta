@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Woodcrawlers</title>
+    <style>
+        body {
+            margin: 0;
+            background-color: #000;
+            color: #1aff1a;
+            font-family: "Courier New", monospace;
+        }
+
+       
+        #estatica {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.13;
+            image-rendering: pixelated;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .linhas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(
+                0deg,
+                rgba(0, 0, 0, 0.35) 0px,
+                rgba(0, 0, 0, 0.35) 1px,
+                transparent 1px,
+                transparent 3px
+            );
+            pointer-events: none;
+            z-index: 3;
+        }
+
+        .barra {
+            position: fixed;
+            left: 0;
+            width: 100%;
+            height: 80px;
+            background: linear-gradient(transparent, rgba(26, 255, 26, 0.08), transparent);
+            pointer-events: none;
+            z-index: 2;
+            animation: descer 7s linear infinite;
+        }
+
+        .conteudo {
+            position: relative;
+            z-index: 1;
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 60px 20px 80px 20px;
+            text-align: center;
+        }
+
+        .titulo {
+            font-size: 64px;
+            text-transform: uppercase;
+            letter-spacing: 8px;
+            margin: 0 0 40px 0;
+            text-shadow: 0 0 12px #00ff00;
+            animation: glitch 4s infinite;
+        }
+
+       
+        .imagem {
+            width: 450px;
+            max-width: 100%;
+            border: 2px solid #0a6b0a;
+            box-shadow: 0 0 25px #006600;
+        }
+
+        .subtitulo {
+            font-size: 28px;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            margin: 50px 0 20px 0;
+        }
+
+        .texto {
+            font-size: 19px;
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+
+        .regras {
+            text-align: left;
+            font-size: 18px;
+            line-height: 1.7;
+            padding-left: 25px;
+            margin: 25px 0;
+        }
+
+        .regras li {
+            margin-bottom: 14px;
+        }
+
+        .aviso {
+            font-style: italic;
+            opacity: 0.8;
+        }
+
+        @keyframes descer {
+            0% { top: -100px; }
+            100% { top: 100%; }
+        }
+
+        @keyframes glitch {
+            0%, 92%, 100% {
+                transform: translate(0, 0);
+                text-shadow: 0 0 12px #00ff00;
+            }
+            93% {
+                transform: translate(-4px, 1px);
+                text-shadow: 3px 0 #ff0000, -3px 0 #00ffff;
+            }
+            95% {
+                transform: translate(4px, -1px);
+                text-shadow: -3px 0 #ff0000, 3px 0 #00ffff;
+            }
+            97% {
+                transform: translate(-2px, 0);
+                text-shadow: 0 0 12px #00ff00;
+            }
+        }
+
+     
+        @media (max-width: 600px) {
+            .conteudo {
+                padding: 40px 15px 60px 15px;
+            }
+
+            .titulo {
+                font-size: 34px;
+                letter-spacing: 3px;
+                margin-bottom: 30px;
+            }
+
+            .subtitulo {
+                font-size: 22px;
+                letter-spacing: 2px;
+            }
+
+            .texto,
+            .regras {
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <canvas id="estatica"></canvas>
+    <div class="barra"></div>
+    <div class="linhas"></div>
+
+    <div class="conteudo">
+        <h1 class="titulo">Woodcrawlers</h1>
+
+
+        <img class="imagem" src="skinwalker.jpg" alt="Woodcrawler">
+
+        <h2 class="subtitulo">como se proteger</h2>
+
+        <p class="texto">Eles não dormem, não cansam e não esquecem o cheiro de quem já viram. Mas têm limites. Quem sobreviveu até agora seguiu estas regras:</p>
+
+        <ol class="regras">
+            <li>Nunca entre na floresta depois do anoitecer. Eles caçam na escuridão e conhecem cada galho.</li>
+            <li>Faça silêncio. Eles se guiam pelo som, então não grite, não corra sem necessidade e não responda a nenhuma voz que venha das árvores.</li>
+            <li>Não acenda fogueiras nem lanternas fortes. A luz só mostra a eles onde você está.</li>
+            <li>Se ouvir arranhões na madeira, saia de perto. Eles sobem em troncos, cercas e telhados.</li>
+            <li>Procure abrigo de concreto e metal. Eles roem madeira com facilidade, mas não atravessam paredes sólidas.</li>
+            <li>Nunca ande sozinho. Quem fica para trás não volta.</li>
+        </ol>
+
+        <p class="texto">Se você chegou até aqui, ainda dá tempo. Siga para o bunker e fique em segurança até a tempestade passar.</p>
+
+        <p class="texto aviso">Não conte a ninguém. Eles estão ouvindo.</p>
+    </div>
+
+    <script>
+        var canvas = document.getElementById("estatica");
+        var ctx = canvas.getContext("2d");
+
+        
+        canvas.width = 240;
+        canvas.height = 160;
+
+        function desenharEstatica() {
+            var imagem = ctx.createImageData(canvas.width, canvas.height);
+
+            for (var i = 0; i < imagem.data.length; i += 4) {
+                var cor = Math.random() * 255;
+                imagem.data[i] = cor;       
+                imagem.data[i + 1] = cor;   
+                imagem.data[i + 2] = cor;   
+                imagem.data[i + 3] = 255;   
+            }
+
+            ctx.putImageData(imagem, 0, 0);
+        }
+
+        
+        setInterval(desenharEstatica, 70);
+    </script>
+</body>
+</html>
