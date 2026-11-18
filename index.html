@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contenção</title>
+    <title>Document</title>
     <style>
         body {
             margin: 0;
@@ -55,7 +55,7 @@
             box-shadow: 0 0 30px #006600;
         }
 
-       
+        /* parte que aparece depois de clicar em não */
         .segredo {
             display: none;
             margin-top: 50px;
@@ -107,7 +107,7 @@
             font-size: 22px;
         }
 
-        
+        /* mensagem que aparece quando a senha esta certa */
         .convocacao {
             display: none;
             max-width: 650px;
@@ -155,7 +155,7 @@
             opacity: 0.8;
         }
 
-       
+        /* parte que aparece depois de clicar em sim */
         .localizacao {
             display: none;
             margin-top: 50px;
@@ -180,28 +180,77 @@
             box-shadow: 0 0 25px #006600;
         }
 
-        
-        .saibaMais {
+        /* escolha de personagem (aparece quando a senha esta certa) */
+        .personagens {
             display: none;
-            margin-top: 30px;
-            font-size: 22px;
+            margin-top: 50px;
+        }
+
+        .perguntaPersonagem {
+            font-size: 24px;
             text-transform: uppercase;
             letter-spacing: 3px;
-            text-decoration: none;
-            padding: 12px 40px;
-            color: #1aff1a;
-            border: 2px solid #1aff1a;
-            box-shadow: 0 0 20px #006600;
-            transition: 0.3s;
+            margin-bottom: 25px;
+            text-shadow: 0 0 10px #00ff00;
         }
 
-        .saibaMais:hover {
+        .botoesPersonagens {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            max-width: 650px;
+            margin: 0 auto;
+        }
+
+        .personagem {
+            min-width: 170px;
+            min-height: 50px;
+            margin: 0;
+            padding: 10px 20px;
+            font-size: 20px;
+        }
+
+        .personagem:hover {
             background-color: #1aff1a;
             color: #000;
-            box-shadow: 0 0 30px #00ff00;
+            box-shadow: 0 0 20px #00ff00;
         }
 
-      
+        .areaSenha {
+            display: none;
+            margin-top: 35px;
+        }
+
+        /* pista de cada personagem (pre-wrap mantém os espaços do jeito que foram escritos) */
+        .pista {
+            white-space: pre-wrap;
+            overflow-wrap: anywhere;
+            font-size: 20px;
+            letter-spacing: 2px;
+            line-height: 1.6;
+            margin: 0 0 30px 0;
+            text-shadow: 0 0 10px #00ff00;
+        }
+
+        @media (max-width: 600px) {
+            .pista {
+                font-size: 16px;
+                letter-spacing: 1px;
+            }
+
+            .perguntaPersonagem {
+                font-size: 18px;
+                letter-spacing: 2px;
+            }
+
+            .personagem {
+                min-width: 130px;
+                font-size: 16px;
+            }
+        }
+
+        /* assinatura no canto da pagina */
         .assinatura {
             position: fixed;
             bottom: 10px;
@@ -214,7 +263,7 @@
             opacity: 0.7;
         }
 
-        
+        /* deixa o conteudo caber em telas menores */
         .cabeca {
             width: 100%;
             box-sizing: border-box;
@@ -226,6 +275,7 @@
             overflow-wrap: break-word;
         }
 
+        /* tablets e janelas menores */
         @media (max-width: 800px) {
             .pergunta {
                 font-size: 36px;
@@ -239,9 +289,10 @@
             }
         }
 
+        /* celulares */
         @media (max-width: 600px) {
             .cabeca {
-                padding: 20px 15px 90px 15px; 
+                padding: 20px 15px 90px 15px; /* espaço embaixo pra assinatura não cobrir nada */
             }
 
             .pergunta {
@@ -311,7 +362,7 @@
             to { opacity: 1; }
         }
 
-      
+        /* faz o titulo piscar como se a luz estivesse falhando */
         @keyframes piscar {
             0% { opacity: 1; }
             90% { opacity: 1; }
@@ -351,15 +402,27 @@
                 <p class="aviso">Não conte a ninguém. Eles estão ouvindo.</p>
             </div>
 
-            
-         <a class="saibaMais" id="saibaMais" href="index2.html">saiba mais</a>
+            <div class="personagens" id="personagens">
+                <p class="perguntaPersonagem">Qual dos nossos sobreviventes é você?</p>
+
+                <!-- os botões são criados pelo javascript, a partir da lista "personagens" lá embaixo -->
+                <div class="botoesPersonagens" id="botoesPersonagens"></div>
+
+                <div class="areaSenha" id="areaSenha">
+                    <p class="frase" id="pedirSenha"></p>
+                    <p class="pista" id="pistaPersonagem"></p>
+                    <input type="text" class="senha" id="senhaPersonagem" placeholder="digite a senha">
+                    <button class="btnSenha" onclick="verificarPersonagem()">enviar</button>
+                    <p class="resultado" id="resultadoPersonagem"></p>
+                </div>
+            </div>
         </div>
 
         <div class="localizacao" id="localizacao">
             <p class="textoLoc" id="textoLoc"></p>
 
-           
-            <img class="imagem" id="imagem" src="skinwalker 2.jpg" alt="">
+            <!-- COLOQUE A IMAGEM AQUI: troque o src pelo nome do seu arquivo (ex: imagem.png) -->
+            <img class="imagem" id="imagem" src="" alt="">
         </div>
     </header>
 
@@ -373,7 +436,7 @@
         var tempo;
 
         function mostrarSegredo() {
-            
+            // para a animação do sim, se ela estiver rodando
             clearInterval(intervalo);
             clearTimeout(tempo);
             document.getElementById("localizacao").style.display = "none";
@@ -386,7 +449,7 @@
             var imagem = document.getElementById("imagem");
             var pontos = 0;
 
-            
+            // limpa qualquer animação anterior e esconde a parte do não
             clearInterval(intervalo);
             clearTimeout(tempo);
             document.getElementById("segredo").style.display = "none";
@@ -396,7 +459,7 @@
             imagem.style.display = "none";
             texto.textContent = "pegando sua localização";
 
-            
+            // os 3 pontinhos de carregando (um novo ponto a cada meio segundo)
             intervalo = setInterval(function () {
                 pontos = pontos + 1;
                 if (pontos > 3) {
@@ -405,7 +468,7 @@
                 texto.textContent = "pegando sua localização" + ".".repeat(pontos);
             }, 500);
 
-           
+            // depois de 5 segundos mostra a mensagem final e a imagem
             tempo = setTimeout(function () {
                 clearInterval(intervalo);
                 texto.classList.add("alerta");
@@ -418,17 +481,92 @@
             var texto = document.getElementById("senha").value;
             var resultado = document.getElementById("resultado");
 
-           
+            // tira espaços e deixa tudo maiúsculo pra não errar por causa disso
             texto = texto.trim().toUpperCase();
 
             if (texto === "WOODCRAWLERS") {
                 resultado.textContent = "";
                 document.getElementById("convocacao").style.display = "block";
-                document.getElementById("saibaMais").style.display = "inline-block";
+                document.getElementById("personagens").style.display = "block";
             } else {
                 resultado.textContent = "senha errada. a tempestade está chegando...";
                 document.getElementById("convocacao").style.display = "none";
-                document.getElementById("saibaMais").style.display = "none";
+                document.getElementById("personagens").style.display = "none";
+                document.getElementById("areaSenha").style.display = "none";
+            }
+        }
+
+        // ---------- SOBREVIVENTES ----------
+        // Para cada personagem: nome do botão, senha dele e a página para onde ele vai.
+        // Os 3 últimos estão em branco: é só preencher o nome (e trocar a senha) quando tiver.
+        // "pagina" vazia = ainda não tem página; depois coloque, por exemplo, "connor.html"
+        // "pista" é o texto que aparece antes da caixa de senha (pode deixar vazio)
+        var personagens = [
+            { nome: "Connor",  senha: "ASSAZ",   pagina: "", pista: "" },
+            { nome: "Sabine",  senha: "TROCAR2", pagina: "", pista: "" },
+            { nome: "Phillip", senha: "TROCAR3", pagina: "", pista: "" },
+            { nome: "Eliza",   senha: "THANKS",  pagina: "", pista: "MATCH?" },
+            { nome: "",        senha: "TROCAR5", pagina: "", pista: "" },
+            { nome: "",        senha: "TROCAR6", pagina: "", pista: "" }
+        ];
+
+        var personagemAtual = -1;
+
+        // cria um botão para cada personagem da lista
+        function criarBotao(indice) {
+            var botao = document.createElement("button");
+            botao.className = "personagem";
+            botao.textContent = personagens[indice].nome;
+            botao.onclick = function () {
+                escolherPersonagem(indice);
+            };
+            document.getElementById("botoesPersonagens").appendChild(botao);
+        }
+
+        for (var i = 0; i < personagens.length; i++) {
+            criarBotao(i);
+        }
+
+        // quando clica em um personagem, pede a senha dele
+        function escolherPersonagem(indice) {
+            personagemAtual = indice;
+
+            var nome = personagens[indice].nome;
+            if (nome === "") {
+                document.getElementById("pedirSenha").textContent = "digite a senha";
+            } else {
+                document.getElementById("pedirSenha").textContent = "digite a senha de " + nome;
+            }
+
+            // mostra a pista do personagem (se ele tiver uma)
+            var pista = document.getElementById("pistaPersonagem");
+            pista.textContent = personagens[indice].pista;
+            if (personagens[indice].pista === "") {
+                pista.style.display = "none";
+            } else {
+                pista.style.display = "block";
+            }
+
+            document.getElementById("senhaPersonagem").value = "";
+            document.getElementById("resultadoPersonagem").textContent = "";
+            document.getElementById("areaSenha").style.display = "block";
+        }
+
+        function verificarPersonagem() {
+            var texto = document.getElementById("senhaPersonagem").value;
+            var resultado = document.getElementById("resultadoPersonagem");
+            var personagem = personagens[personagemAtual];
+
+            texto = texto.trim().toUpperCase();
+
+            if (texto === personagem.senha.toUpperCase()) {
+                if (personagem.pagina !== "") {
+                    window.location.href = personagem.pagina;
+                } else {
+                    resultado.textContent = "senha correta.";
+                }
+            } else {
+                resultado.textContent = "senha errada.";
             }
         }
     </script>
