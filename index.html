@@ -496,14 +496,8 @@
             }
         }
 
-        // ---------- SOBREVIVENTES ----------
-        // Para cada personagem: nome do botão, senha dele e a página para onde ele vai.
-        // Os 3 últimos estão em branco: é só preencher o nome (e trocar a senha) quando tiver.
-        // "pagina" vazia = ainda não tem página; depois coloque, por exemplo, "connor.html"
-        // "pista" é o texto que aparece antes da caixa de senha (pode deixar vazio)
-        var personagens = [
             { nome: "Connor",  senha: "ASSAZ",   pagina: "", pista: "" },
-            { nome: "Sabine",  senha: "TROCAR2", pagina: "", pista: "" },
+            { nome: "Sabine",  senha: "AURORA", pagina: "", pista: "" },
             { nome: "Phillip", senha: "MATÉRIA", pagina: "", pista: "" },
             { nome: "Eliza",   senha: "THANKS",  pagina: "", pista: "MATCH?" },
             { nome: "Arden",        senha: "MATÉRIA", pagina: "", pista: "" },
@@ -527,7 +521,7 @@
             criarBotao(i);
         }
 
-        // quando clica em um personagem, pede a senha dele
+      
         function escolherPersonagem(indice) {
             personagemAtual = indice;
 
