@@ -510,6 +510,7 @@
             imagem.style.display = "none";
             texto.textContent = "pegando sua localização";
 
+            // os 3 pontinhos de carregando (um novo ponto a cada meio segundo)
             intervalo = setInterval(function () {
                 pontos = pontos + 1;
                 if (pontos > 3) {
@@ -518,6 +519,7 @@
                 texto.textContent = "pegando sua localização" + ".".repeat(pontos);
             }, 500);
 
+            // depois de 5 segundos mostra a mensagem final e a imagem
             tempo = setTimeout(function () {
                 clearInterval(intervalo);
                 texto.classList.add("alerta");
@@ -530,6 +532,7 @@
             var texto = document.getElementById("senha").value;
             var resultado = document.getElementById("resultado");
 
+            // tira espaços e deixa tudo maiúsculo pra não errar por causa disso
             texto = texto.trim().toUpperCase();
 
             if (texto === "WOODCRAWLERS") {
@@ -544,7 +547,17 @@
             }
         }
 
-        
+        // ---------- SOBREVIVENTES ----------
+        // Para cada personagem:
+        //   nome       = texto do botão
+        //   senha      = senha dele
+        //   pista      = texto que aparece antes da caixa de senha (pode ficar vazio)
+        //   mensagem   = texto que aparece quando ele acerta a senha
+        //   imagem     = nome do arquivo de imagem que aparece quando acerta (ex: "connor.png")
+        //   link       = botão que leva para outra página/site quando acerta (ex: "connor.html")
+        //   textoLink  = o que está escrito nesse botão
+        //   pagina     = se preencher, ele é levado direto para essa página, sem mostrar nada
+        // Deixe "" no que você não for usar.
         var personagens = [
             {
                 nome: "Connor",
@@ -561,7 +574,7 @@
                 senha: "AURORA",
                 pista: "",
                 mensagem: "",
-                imagem: "",
+                imagem: "Preucurado.jpg",
                 link: "",
                 textoLink: "saiba mais",
                 pagina: ""
