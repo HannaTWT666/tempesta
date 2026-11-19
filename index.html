@@ -222,6 +222,50 @@
             margin-top: 35px;
         }
 
+        /* o que aparece quando o personagem acerta a senha */
+        .premio {
+            display: none;
+            max-width: 650px;
+            margin: 30px auto 0 auto;
+            animation: aparecer 2s;
+        }
+
+        .mensagemPremio {
+            white-space: pre-wrap;
+            font-size: 19px;
+            line-height: 1.7;
+            margin: 0;
+        }
+
+        .imagemPremio {
+            display: none;
+            margin: 20px auto 0 auto;
+            width: 400px;
+            max-width: 90%;
+            border: 2px solid #0a6b0a;
+            box-shadow: 0 0 25px #006600;
+        }
+
+        .linkPremio {
+            display: none;
+            margin-top: 25px;
+            padding: 12px 40px;
+            font-size: 20px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            text-decoration: none;
+            color: #1aff1a;
+            border: 2px solid #1aff1a;
+            box-shadow: 0 0 20px #006600;
+            transition: 0.3s;
+        }
+
+        .linkPremio:hover {
+            background-color: #1aff1a;
+            color: #000;
+            box-shadow: 0 0 30px #00ff00;
+        }
+
         /* pista de cada personagem (pre-wrap mantém os espaços do jeito que foram escritos) */
         .pista {
             white-space: pre-wrap;
@@ -414,6 +458,13 @@
                     <input type="text" class="senha" id="senhaPersonagem" placeholder="digite a senha">
                     <button class="btnSenha" onclick="verificarPersonagem()">enviar</button>
                     <p class="resultado" id="resultadoPersonagem"></p>
+
+                    <!-- o que cada personagem recebe quando acerta a senha (preenchido pelo javascript) -->
+                    <div class="premio" id="premio">
+                        <p class="mensagemPremio" id="mensagemPremio"></p>
+                        <img class="imagemPremio" id="imagemPremio" src="" alt="">
+                        <a class="linkPremio" id="linkPremio" href="">saiba mais</a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -459,7 +510,6 @@
             imagem.style.display = "none";
             texto.textContent = "pegando sua localização";
 
-            // os 3 pontinhos de carregando (um novo ponto a cada meio segundo)
             intervalo = setInterval(function () {
                 pontos = pontos + 1;
                 if (pontos > 3) {
@@ -468,7 +518,6 @@
                 texto.textContent = "pegando sua localização" + ".".repeat(pontos);
             }, 500);
 
-            // depois de 5 segundos mostra a mensagem final e a imagem
             tempo = setTimeout(function () {
                 clearInterval(intervalo);
                 texto.classList.add("alerta");
@@ -481,7 +530,6 @@
             var texto = document.getElementById("senha").value;
             var resultado = document.getElementById("resultado");
 
-            // tira espaços e deixa tudo maiúsculo pra não errar por causa disso
             texto = texto.trim().toUpperCase();
 
             if (texto === "WOODCRAWLERS") {
@@ -496,18 +544,68 @@
             }
         }
 
-        // ---------- SOBREVIVENTES ----------
-        // Para cada personagem: nome do botão, senha dele e a página para onde ele vai.
-        // Os 3 últimos estão em branco: é só preencher o nome (e trocar a senha) quando tiver.
-        // "pagina" vazia = ainda não tem página; depois coloque, por exemplo, "connor.html"
-        // "pista" é o texto que aparece antes da caixa de senha (pode deixar vazio)
+        
         var personagens = [
-            { nome: "Connor",   senha: "ASSAZ",    pagina: "", pista: "" },
-            { nome: "Sabine",   senha: "AURORA",   pagina: "", pista: "" },
-            { nome: "Phillip",  senha: "MATÉRIA",  pagina: "", pista: "" },
-            { nome: "Eliza",    senha: "THANKS",   pagina: "", pista: "MATCH?" },
-            { nome: "Arden",    senha: "MATÉRIA",  pagina: "", pista: "" },
-            { nome: "Camellia", senha: "IPROMISE", pagina: "", pista: "" }
+            {
+                nome: "Connor",
+                senha: "ASSAZ",
+                pista: "",
+                mensagem: "",
+                imagem: "---- ficha criminal.jpg",
+                link: "",
+                textoLink: "saiba mais",
+                pagina: ""
+            },
+            {
+                nome: "Sabine",
+                senha: "AURORA",
+                pista: "",
+                mensagem: "",
+                imagem: "",
+                link: "",
+                textoLink: "saiba mais",
+                pagina: ""
+            },
+            {
+                nome: "Phillip",
+                senha: "MATÉRIA",
+                pista: "",
+                mensagem: "",
+                imagem: "",
+                link: "",
+                textoLink: "saiba mais",
+                pagina: ""
+            },
+            {
+                nome: "Eliza",
+                senha: "THANKS",
+                pista: "MATCH?",
+                mensagem: "",
+                imagem: "",
+                link: "",
+                textoLink: "saiba mais",
+                pagina: ""
+            },
+            {
+                nome: "Arden",
+                senha: "MATÉRIA",
+                pista: "",
+                mensagem: "",
+                imagem: "",
+                link: "",
+                textoLink: "saiba mais",
+                pagina: ""
+            },
+            {
+                nome: "Camellia",
+                senha: "IPROMISE",
+                pista: "",
+                mensagem: "",
+                imagem: "",
+                link: "",
+                textoLink: "saiba mais",
+                pagina: ""
+            }
         ];
 
         var personagemAtual = -1;
@@ -549,7 +647,49 @@
 
             document.getElementById("senhaPersonagem").value = "";
             document.getElementById("resultadoPersonagem").textContent = "";
+            esconderPremio();
             document.getElementById("areaSenha").style.display = "block";
+        }
+
+        function esconderPremio() {
+            document.getElementById("premio").style.display = "none";
+        }
+
+        // mostra o que o personagem ganha quando acerta (mensagem, imagem e/ou botão)
+        function mostrarPremio(personagem) {
+            var caixa = document.getElementById("premio");
+            var mensagem = document.getElementById("mensagemPremio");
+            var imagem = document.getElementById("imagemPremio");
+            var link = document.getElementById("linkPremio");
+
+            if (personagem.mensagem !== "") {
+                mensagem.textContent = personagem.mensagem;
+                mensagem.style.display = "block";
+            } else {
+                mensagem.style.display = "none";
+            }
+
+            if (personagem.imagem !== "") {
+                imagem.src = personagem.imagem;
+                imagem.style.display = "block";
+            } else {
+                imagem.style.display = "none";
+            }
+
+            if (personagem.link !== "") {
+                link.href = personagem.link;
+                link.textContent = personagem.textoLink;
+                link.style.display = "inline-block";
+            } else {
+                link.style.display = "none";
+            }
+
+            // só mostra a caixa se tiver pelo menos uma coisa dentro
+            if (personagem.mensagem !== "" || personagem.imagem !== "" || personagem.link !== "") {
+                caixa.style.display = "block";
+            } else {
+                caixa.style.display = "none";
+            }
         }
 
         function verificarPersonagem() {
@@ -564,9 +704,11 @@
                     window.location.href = personagem.pagina;
                 } else {
                     resultado.textContent = "senha correta.";
+                    mostrarPremio(personagem);
                 }
             } else {
                 resultado.textContent = "senha errada.";
+                esconderPremio();
             }
         }
     </script>
